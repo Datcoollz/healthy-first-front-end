@@ -5,6 +5,7 @@ import DialogBar from "../Menu/DialogBar";
 
 export default function AddWard(props) {
     const [districts, setDistricts] = useState([]);
+    const [selectedDistrict, setSelectedDistrict] = useState();
     const [newWard, setNewWard] = useState("");
     const [showError, setShowError] = useState(false);
 
@@ -38,7 +39,7 @@ export default function AddWard(props) {
             props.onConfirm();
             fetch('https://api1.vominhduc.me/api/wards/create', {
                 method: 'POST',
-                body: JSON.stringify({ name: newWard }),
+                body: JSON.stringify({ name: newWard, districtId: selectedDistrict?.id }),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -60,6 +61,8 @@ export default function AddWard(props) {
                 <DropdownInput
                     label="Thuộc quận"
                     list={districts}
+                    value={selectedDistrict}
+                    onChange={setSelectedDistrict}
                 />
             </form>
             <DialogBar onConfirm={confirm} onCancel={cancel} />
