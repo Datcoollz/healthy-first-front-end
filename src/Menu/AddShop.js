@@ -5,7 +5,6 @@ import FormInput from "./FormInput";
 export default function AddShop(props) {
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
-    const [query, setQuery] = useState('');
 
     const emptyShop =
     {
@@ -37,62 +36,51 @@ export default function AddShop(props) {
         load();
     }, []);
 
-    const filteredDistrict =
-        query === ''
-            ? districts
-            : districts.filter((d) => {
-                return d.name.toLowerCase().includes(query.toLowerCase());
-            });
+    const confirm = () => {
+        fetch('https://api1.vominhduc.me/api/shops/create', {
+            method: 'POST',
+            body: JSON.stringify(newShop),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(() => { setNewShop(emptyShop) })
+            .then(props.onConfirm())
+    }
+
+    const cancel = () => {
+        setNewShop(emptyShop);
+        props.onCancel();
+    }
 
     return (
         <div id="add" className="flex flex-col h-screen w-screen items-center justify-center">
             <form>
-                
-                <div className="flex items-center mb-6">
-                    <div className="w-1/3">
-                        <label htmlFor="name">
-                            Tên cửa hàng
-                        </label>
-                    </div>
-                    <div className="w-2/3">
-                        <input id="name" type="text" value={newShop.name}
-                            onChange={(e) => setNewShop({
-                                ...(newShop ?? {}), name: e.target.value
-                            })} />
-                    </div>
-                </div>
+                <FormInput label="Tên cửa hàng" placeholder="cửa hàng"
+                    value={newShop.name}
+                    onChange={(e) => setNewShop({
+                        ...(newShop ?? {}), name: e.target.value
+                    })}
+                />
 
-                <div className="flex items-center mb-6">
-                    <div className="w-1/3">
-                        <label htmlFor="address">
-                            Địa chỉ
-                        </label>
-                    </div>
-                    <div className="w-2/3">
-                        <input id="address" type="text" value={newShop.address}
-                            onChange={(e) => setNewShop({
-                                ...(newShop ?? {}), address: e.target.value
-                            })} />
-                    </div>
-                </div>
+                <FormInput label="Địa chỉ" placeholder="địa chỉ"
+                    value={newShop.address}
+                    onChange={(e) => setNewShop({
+                        ...(newShop ?? {}), address: e.target.value
+                    })}
+                />
 
-                <div className="flex items-center mb-6">
-                    <div className="w-1/3">
-                        <label htmlFor="phone-number">
-                            Số điện thoại
-                        </label>
-                    </div>
-                    <div className="w-2/3">
-                        <input id="phone-number" type="text" value={newShop.phone_number}
-                            onChange={(e) => setNewShop({
-                                ...(newShop ?? {}), phone_number: e.target.value
-                            })} />
-                    </div>
-                </div>
+                <FormInput label="Số điện thoại" placeholder="số điện thoại"
+                    value={newShop.phone_number}
+                    onChange={(e) => setNewShop({
+                        ...(newShop ?? {}), phone_number: e.target.value
+                    })}
+                />
 
-                <div className="flex flex-wrap">
+                <label>Phương thức sản suất</label>
+                <div className="flex flex-wrap border-2 rounded border-slate-600 p-2">
                     <label className="block">
-                        <input type="checkbox" className="leading-tight mr-2"
+                        <input type="checkbox" className="mr-1"
                             checked={newShop.is_product}
                             onChange={() => setNewShop({
                                 ...(newShop ?? {}), is_product: !newShop.is_product
@@ -100,7 +88,7 @@ export default function AddShop(props) {
                         <span>Sản xuất thực phẩm</span>
                     </label>
                     <label className="block">
-                        <input type="checkbox" className="leading-tight mr-2"
+                        <input type="checkbox" className="mr-1"
                             checked={newShop.is_seller}
                             onChange={() => setNewShop({
                                 ...(newShop ?? {}), is_seller: !newShop.is_seller
@@ -118,23 +106,7 @@ export default function AddShop(props) {
                     </div>
                 </div>
 
-                <DialogBar
-                    onConfirm={() => {
-                        fetch('https://api1.vominhduc.me/api/shops/create', {
-                            method: 'POST',
-                            body: JSON.stringify(newShop),
-                            headers: {
-                                'content-type': 'application/json'
-                            }
-                        })
-                            .then(() => { setNewShop(emptyShop) })
-                            .then(props.onConfirm())
-                    }}
-                    onCancel={() => {
-                        setNewShop(emptyShop);
-                        props.onCancel();
-                    }}
-                />
+                <DialogBar onConfirm={confirm} onCancel={cancel}/>
             </form >
         </div >
     )
