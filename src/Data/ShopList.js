@@ -29,7 +29,7 @@ function ShopTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.shops.map(s => (
+                    {props?.shops?.map(s => (
                         <tr key={s.id}>
                             <td>{s.name}</td>
                             <td>{s.address}</td>
