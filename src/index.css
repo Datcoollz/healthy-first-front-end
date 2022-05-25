@@ -38,7 +38,7 @@ body {
   @apply text-9xl;
 }
 
-button {
+button, button[type="button"] {
   @apply m-5;
   @apply uppercase;
   @apply px-5;
