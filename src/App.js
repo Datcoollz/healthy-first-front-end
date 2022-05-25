@@ -105,7 +105,6 @@ function App() {
             districts={districts}
             wards={wards}
           />
-          <button>GAY</button>
           <AddButton />
         </div>
       );
