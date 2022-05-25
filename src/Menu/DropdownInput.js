@@ -18,7 +18,7 @@ export default function DropdownInput(props) {
     //hello sir
     return (
         <div>
-            <Combobox value={selected} onChange={setSelected}>
+            <Combobox value={props.value} onChange={props.onChange}>
                 <div className="relative">
                     <span>{props.label}</span>
                     <div className="relative">
@@ -67,7 +67,7 @@ export default function DropdownInput(props) {
                                                 </span>
                                                 {selected ? (
                                                     <span
-                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-teal-600'
+                                                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-slate-600'
                                                             }`}
                                                     >
                                                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
