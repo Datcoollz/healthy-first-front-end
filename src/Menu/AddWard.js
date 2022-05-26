@@ -7,15 +7,6 @@ export default function AddWard(props) {
     const [districts, setDistricts] = useState([]);
     const [selectedDistrict, setSelectedDistrict] = useState();
     const [newWard, setNewWard] = useState("");
-    const [showError, setShowError] = useState(false);
-
-    const Warning = () => {
-        return showError ? (
-            <button className="bg-red-400 hover:bg-red-400 focus:bg-red-400">
-                Hãy nhập tên phường
-            </button>
-        ) : <div></div>;
-    }
 
     const load = async () => {
         try {
@@ -32,10 +23,7 @@ export default function AddWard(props) {
     useEffect(() => { load() }, []);
 
     const confirm = () => {
-        if (newWard === '') {
-            setShowError(true);
-        }
-        else {
+        if (newWard !== '') {
             props.onConfirm();
             fetch('https://api1.vominhduc.me/api/wards/create', {
                 method: 'POST',
@@ -48,7 +36,6 @@ export default function AddWard(props) {
     }
     const cancel = () => {
         setNewWard("");
-        setShowError(true);
         props.onCancel();
     }
 
