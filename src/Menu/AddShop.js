@@ -1,10 +1,15 @@
-import { useEffect, useState, Fragment } from "react";
-import DialogBar from "../Menu/DialogBar";
+import { useEffect, useState } from "react";
+
 import FormInput from "./FormInput";
+import DialogBar from "../Menu/DialogBar";
+import DropdownInput from "./DropdownInput";
 
 export default function AddShop(props) {
+    const [selectedDistrict, setSelectedDistrict] = useState();
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
+    const [selectedWard, setSelectedWard] = useState();
+
 
     const emptyShop =
     {
@@ -20,12 +25,10 @@ export default function AddShop(props) {
 
     const load = async () => {
         try {
-            const [d, w] = await Promise.all([
+            const [d] = await Promise.all([
                 fetch('https://api1.vominhduc.me/api/districts').then(rd => rd.json()),
-                fetch('https://api1.vominhduc.me/api/wards').then(rw => rw.json())
             ]);
             setDistricts(d);
-            setWards(w);
         }
         catch (err) {
             console.log(err);
@@ -36,7 +39,28 @@ export default function AddShop(props) {
         load();
     }, []);
 
+    const changeDistrict = (d) => {
+        setNewShop({
+            ...(newShop ?? {}), district: d.id
+        })
+        fetch('https://api1.vominhduc.me/api/districts/' + d.id.toString())
+            .then(rd => rd.json())
+            .then(d => setWards(d.wards));
+        setSelectedDistrict(d);
+    }
+
+    const changeWard = (w) => {
+        setNewShop({
+            ...(newShop ?? {}), ward: w.id
+        })
+        setSelectedWard(w);
+    }
+
     const confirm = () => {
+        setNewShop({
+            ...(newShop ?? {}), district: selectedDistrict, ward: selectedWard
+        });
+        console.log(newShop);
         fetch('https://api1.vominhduc.me/api/shops/create', {
             method: 'POST',
             body: JSON.stringify(newShop),
@@ -58,27 +82,27 @@ export default function AddShop(props) {
             <form>
                 <FormInput label="Tên cửa hàng" placeholder="cửa hàng"
                     value={newShop.name}
-                    onChange={(e) => setNewShop({
-                        ...(newShop ?? {}), name: e.target.value
+                    onChange={(n) => setNewShop({
+                        ...(newShop ?? {}), name: n
                     })}
                 />
 
                 <FormInput label="Địa chỉ" placeholder="địa chỉ"
                     value={newShop.address}
-                    onChange={(e) => setNewShop({
-                        ...(newShop ?? {}), address: e.target.value
+                    onChange={(a) => setNewShop({
+                        ...(newShop ?? {}), address: a
                     })}
                 />
 
                 <FormInput label="Số điện thoại" placeholder="số điện thoại"
                     value={newShop.phone_number}
-                    onChange={(e) => setNewShop({
-                        ...(newShop ?? {}), phone_number: e.target.value
+                    onChange={(p) => setNewShop({
+                        ...(newShop ?? {}), phone_number: p
                     })}
                 />
 
                 <label>Phương thức sản suất</label>
-                <div className="flex flex-wrap border-2 rounded border-slate-600 p-2">
+                <div className="flex flex-wrap p-2">
                     <label className="block">
                         <input type="checkbox" className="mr-1"
                             checked={newShop.is_product}
@@ -97,17 +121,18 @@ export default function AddShop(props) {
                     </label>
                 </div>
 
-                <div className="flex items-center">
-                    <div className="w-1/3">
-                        <label htmlFor="district-combobox">Quận</label>
-                    </div>
-                    <div className="w-2/3">
+                <DropdownInput label="Quận"
+                    list={districts}
+                    value={selectedDistrict}
+                    onChange={changeDistrict} />
 
-                    </div>
-                </div>
-
-                <DialogBar onConfirm={confirm} onCancel={cancel}/>
+                <DropdownInput label="Phường"
+                    list={wards}
+                    value={selectedWard}
+                    onChange={changeWard}
+                />
             </form >
+            <DialogBar onConfirm={confirm} onCancel={cancel} />
         </div >
     )
 }
