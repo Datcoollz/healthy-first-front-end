@@ -1,9 +1,8 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 export default function DropdownInput(props) {
-    const [selected, setSelected] = useState();
     const [query, setQuery] = useState('')
 
     const filteredOptions =
@@ -15,12 +14,11 @@ export default function DropdownInput(props) {
                     .replace(/\s+/g, '')
                     .includes(query.toLowerCase().replace(/\s+/g, ''))
             )
-    //hello sir
     return (
         <div>
+            <label>{props.label}</label>
             <Combobox value={props.value} onChange={props.onChange}>
                 <div className="relative">
-                    <span>{props.label}</span>
                     <div className="relative">
                         <Combobox.Input
                             displayValue={(person) => person?.name}
@@ -40,10 +38,11 @@ export default function DropdownInput(props) {
                         leaveTo="opacity-0"
                         afterLeave={() => setQuery('')}
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto
+                        <Combobox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto
                         rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5
                         focus:outline-none sm:text-sm">
-                            {filteredOptions.length === 0 && query !== '' ? (
+                            {props.list.length === 0 ||
+                                (filteredOptions.length === 0 && query !== '') ? (
                                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                                     Không có kết quả.
                                 </div>
