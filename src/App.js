@@ -71,8 +71,8 @@ function App() {
         <div className="flex flex-col">
           <MenuBar />
           <AddShop
-            onConfirm={() => confirmChanges()}
-            onCancel={() => cancelChanges()}
+            onConfirm={confirmChanges}
+            onCancel={cancelChanges}
           />
         </div>
       );
@@ -81,8 +81,8 @@ function App() {
         <div className="flex flex-col">
           <MenuBar />
           <AddDistrict
-            onConfirm={() => confirmChanges()}
-            onCancel={() => cancelChanges()}
+            onConfirm={confirmChanges}
+            onCancel={cancelChanges}
           />
         </div>
       );
@@ -91,8 +91,8 @@ function App() {
         <div className="flex flex-col">
           <MenuBar />
           <AddWard
-            onConfirm={() => confirmChanges()}
-            onCancel={() => cancelChanges()}
+            onConfirm={confirmChanges}
+            onCancel={cancelChanges}
           />
         </div>
       );
