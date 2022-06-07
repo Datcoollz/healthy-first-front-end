@@ -93,3 +93,5 @@ export function getCertificates(shop_id: number, page: number, item_per_page: nu
 export function getPlans() { return fetch("/api/plans", { method: "GET" }) }
 
 export function getPlan(id: number) { return fetch("/api/plans/" + id.toString(), { method: "GET" }) }
+
+export function getActivities() {return fetch("api/activities", { method: 'GET' })}

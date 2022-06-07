@@ -7,7 +7,6 @@ import TableDropdown from '../Components/TableDropdown';
 import WardList from './WardPage/WardTable';
 import { getShops, getDistricts, getWards, deleteWard } from './Tables/TableData';
 import Loading from './Loading';
-import { grants } from '../../Interface/Grant';
 
 export default function WardPage() {
     const nav = useNavigate();

@@ -35,7 +35,7 @@ export default function PlanPage() {
     return (
         <div>
             <TableDropdown onAdd={onAdd} />
-            <PlanTable plans={plans} onDelete={onDelete} />
+            <PlanTable plans={plans} onDelete={onDelete} onEdit={(id) => {nav({to: id.toString()})}}/>
         </div>
     )
 }

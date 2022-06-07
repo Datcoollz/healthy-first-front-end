@@ -13,7 +13,7 @@ export default function EditDistrct() {
     const [district, setDistrict] = useState("")
     const [error, setError] = useState("")
     const [dataError, setDataError] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     const confirm = async () => {
         setLoading(true)
@@ -27,21 +27,6 @@ export default function EditDistrct() {
         setLoading(false)
         nav({ to: "../" })
     }
-
-    const load = async () => {
-        setLoading(true)
-        const r = await fetch("/api/districts/" + id.toString(), { method: 'GET' })
-        const d = await r.json();
-        const s = await r.status;
-        if (s != 200) setDataError(true)
-        else {
-            setDistrict(d.name)
-            setOldName(d.name)
-        }
-        setLoading(false)
-    }
-
-    useEffect(() => { load() }, []);
 
     if (loading) return (<Loading />)
     if (dataError) return (

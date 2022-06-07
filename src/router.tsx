@@ -16,6 +16,7 @@ import UserPage from './Menu/DisplayPage/UserPage/UserPage';
 import EditUser from "./Menu/DisplayPage/UserPage/EditUser";
 import AddUser from "./Menu/DisplayPage/UserPage/AddUser";
 import EditWard from "./Menu/DisplayPage/WardPage/EditWard";
+import AddActivity from "./Menu/DisplayPage/PlanPage/AddActivity";
 
 const loginRoutes: Route = {
     path: "login",
@@ -102,13 +103,13 @@ const wardRoutes: Route = {
             element: <WardPage />,
         },
         {
-            path: ":id",
-            element: <EditWard/>
-        },
-        {
             path: "add",
             element: <AddWard />
-        }
+        },
+        {
+            path: ":id",
+            element: <EditWard />
+        },
     ]
 }
 
@@ -121,7 +122,16 @@ const planRoutes: Route = {
         },
         {
             path: ":id",
-            element: <EditPlan />
+            children: [
+                {
+                    path: "/",
+                    element: <EditPlan />
+                },
+                {
+                    path: "add_activity",
+                    element: <AddActivity />
+                },
+            ]
         }
     ]
 }

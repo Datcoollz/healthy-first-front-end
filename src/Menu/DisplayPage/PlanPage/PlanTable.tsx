@@ -9,6 +9,7 @@ import { TrashIcon } from '@heroicons/react/solid';
 interface p {
     plans: plans;
     onDelete: (id: number) => void
+    onEdit: (id: number) => void
 }
 
 export default function PlanTable(props: p) {
@@ -40,7 +41,8 @@ export default function PlanTable(props: p) {
                             <td>{p.planId}</td>
                             <td>{p.activities.length.toString()}</td>
                             <td>{p.activities.filter((a) => (a.currentStep >= 3)).length > 0 ? "Chưa hoàn thành" : "Hoàn thành"}</td>
-                            <td><button onClick={() => { props.onDelete(p.planId) }}><TrashIcon className="icon" /></button></td>
+                            <td><EditBar onDelete={() => { props.onDelete(p.planId) }}
+                                onEdit={() => {props.onEdit(p.planId)}} /></td>
                         </tr>
                     )}
                 </tbody>
