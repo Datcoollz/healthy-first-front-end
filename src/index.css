@@ -18,6 +18,14 @@ body {
   @apply text-4xl;
 }
 
+.center-x {
+  @apply flex flex-row justify-center;
+}
+
+.center-y {
+  @apply flex flex-col justify-center;
+}
+
 .form-div {
   @apply flex;
   @apply items-center;
@@ -34,21 +42,28 @@ body {
   @apply text-slate-200;
 }
 
+.large-text {
+  @apply font-bungee text-2xl text-slate-600;
+}
+
+.text-error {
+  @apply text-red-500 font-bold;
+}
+
 .loading {
   @apply text-9xl;
 }
 
-button, button[type="button"] {
-  @apply m-5;
-  @apply uppercase;
-  @apply px-5;
-  @apply py-2.5;
-  @apply text-gray-200;
-  @apply font-bold;
-  @apply rounded;
-  @apply bg-slate-500;
-  @apply hover:bg-slate-700;
-  @apply active:bg-slate-900;
+button,
+button[type="button"] {
+  @apply m-5 uppercase px-5 py-2.5 text-gray-200
+  font-bold rounded bg-slate-500 hover:bg-slate-700
+  active:bg-slate-900;
+  @apply disabled:bg-slate-400;
+}
+
+.page {
+  @apply mx-5;
 }
 
 table {
@@ -72,11 +87,13 @@ td {
 }
 
 form {
-  @apply w-full;
-  @apply max-w-sm;
+  @apply w-full max-w-sm;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="time"] {
   @apply bg-gray-200;
   @apply appearance-none;
   @apply border-2 border-gray-800;
@@ -87,10 +104,10 @@ input[type="text"] {
   @apply focus:outline-none focus:bg-white focus:border-slate-300;
 }
 
+.combo-box {
+  @apply text-slate-600 block bg-transparent;
+}
+
 label {
-  /*class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"*/
-  @apply block;
-  @apply text-gray-500;
-  @apply font-bold;
-  @apply mb-1 pr-4;
+  @apply block text-gray-500 font-bold mb-1 pr-4;
 }
